@@ -23,7 +23,9 @@ when 'POST'
   email = gets.chomp.downcase
   viking = {:user => {:weapon => weapon, :name => name, :email => email}}
   jsond_viking = viking.to_json
-  req = "POST /thanks.html HTTP/1.0" + "\nContent-Length: #{jsond_viking.length}\n\n#{jsond_viking}"
+  req = "POST /thanks.html HTTP/1.0"\
+        "\r\nContent-Length: #{jsond_viking.length}"\
+        "\r\n\r\n#{jsond_viking}"
 end
 
 socket = TCPSocket.open(host, port)
