@@ -18,24 +18,23 @@ loop do
     protocol = request[2]
 
     if method == 'GET' && File.file?(path)
-      file = File.open(path)
-      content_length = file.read.length
+      file = File.open(path).read
+      content_length = file.length
       response = "#{protocol} 200 OK\n"\
                  "Content-Length: #{content_length}\n"\
                  "Date: #{Time.now.ctime}\r\n\r\n"\
-                 "#{file.read}"
+                 "#{file}"
       client.print response
     elsif method == 'POST' && File.file?(path)
-      file = File.open(path)
-      content_length = request.last.length
-
+      file = File.open(path).read
       params = JSON.parse(request.last)
       data = "<li>Name: #{params['user']['name']}</li>"\
              "<li>Email: #{params['user']['email']}</li>"
+      content_length = file.gsub('<%= yield %>', data).length
       response = "#{protocol} 200 OK\n"\
                  "Content-Length: #{content_length}\n"\
                  "Date: #{Time.now.ctime}\r\n\r\n"\
-                 "#{file.read.gsub('<%= yield %>', data)}"
+                 "#{file.gsub('<%= yield %>', data)}"
       client.print response
     else
       response = "#{protocol} 404 NOT FOUND\r\n\r\n"
