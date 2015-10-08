@@ -6,6 +6,7 @@ server = TCPServer.open(port)
 
 loop do
   # For threading use `Thread.start(server.accept) do |client|; end`
+  puts 'Server initialized, waiting for incoming requests.'
   client = server.accept
   request = client.recvfrom(1024)
   puts request
@@ -29,10 +30,10 @@ loop do
       content_length = request.last.length
 
       params = JSON.parse(request.last)
-      data = "<li>Name: #{params['user']['name']}</li>\n\t"\
+      data = "<li>Name: #{params['user']['name']}</li>"\
              "<li>Email: #{params['user']['email']}</li>"
       response = "#{protocol} 200 OK\n"\
-                 "Content length: #{content_length}\n"\
+                 "Content-Length: #{content_length}\n"\
                  "Date: #{Time.now.ctime}\r\n\r\n"\
                  "#{file.read.gsub('<%= yield %>', data)}"
       client.print response

@@ -26,6 +26,8 @@ when 'POST'
   req = "#{method} /thanks.html HTTP/1.0"\
         "\r\nContent-Length: #{jsond_viking.length}"\
         "\r\n\r\n#{jsond_viking}"
+else
+  exit
 end
 
 socket = TCPSocket.open(host, port)
