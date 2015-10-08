@@ -13,7 +13,7 @@ when 'GET'
   puts 'What file would you like to fetch?'
   path += gets.chomp.downcase
   path += '.html' unless path.include?('.html') # securing right format
-  req = "GET #{path} HTTP/1.0\r\n\r\n"
+  req = "#{method} #{path} HTTP/1.0\r\n\r\n"
 when 'POST'
   puts "What's your favorite weapon?"
   weapon = gets.chomp.downcase
@@ -21,9 +21,9 @@ when 'POST'
   name = gets.chomp.downcase
   puts "What's your email?"
   email = gets.chomp.downcase
-  viking = {:user => {:weapon => weapon, :name => name, :email => email}}
+  viking = { user: { weapon: weapon, name: name, email: email } }
   jsond_viking = viking.to_json
-  req = "POST /thanks.html HTTP/1.0"\
+  req = "#{method} /thanks.html HTTP/1.0"\
         "\r\nContent-Length: #{jsond_viking.length}"\
         "\r\n\r\n#{jsond_viking}"
 end
