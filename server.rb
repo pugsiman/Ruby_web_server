@@ -21,6 +21,8 @@ loop do
       file = File.open(path).read
       content_length = file.length
       response = "#{protocol} 200 OK\n"\
+                 "Server: ruby-server\n"\
+                 "Content-Type: text/html; charset=utf-8\n"\
                  "Content-Length: #{content_length}\n"\
                  "Date: #{Time.now.ctime}\r\n\r\n"\
                  "#{file}"

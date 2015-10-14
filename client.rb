@@ -13,7 +13,8 @@ when 'GET'
   puts 'What file would you like to fetch?'
   path += gets.chomp.downcase
   path += '.html' unless path.include?('.html') # securing right format
-  req = "#{method} #{path} HTTP/1.0\r\n\r\n"
+  req = "#{method} #{path} HTTP/1.0\r\n"\
+        "User-Agent: RubyClient/0.1\r\n\r\n"
 when 'POST'
   puts "What's your favorite weapon?"
   weapon = gets.chomp.downcase
